@@ -1,0 +1,7 @@
+volume,start_lba,logical_sector_bytes,absolute_byte_offset,primary_or_logical,evidence_location
+1,63,512,32256,Primary,"E01 MBR entry 1 (bytes 446-461, type 04); boot sector screenshots A1_08, A1_10"
+2,52416,512,26836992,Primary,"E01 MBR entry 2 (bytes 462-477, type 04); boot sector not screenshotted"
+3,104832,512,53673984,Primary,"E01 MBR entry 3 (bytes 478-493, type 04); boot sector not screenshotted"
+4,157311,512,80543232,Logical,"EBR 1 at LBA 157248 (byte 80510976) entry 1 relative start 63; screenshots A1_11, A1_14"
+5,209727,512,107380224,Logical,EBR 1 entry 2 relative start 52479 (157248+52479); boot sector not screenshotted
+6,262143,512,134217216,Logical,"EBR 2 at LBA 262080 (byte 134184960) entry 1 relative start 63; link from EBR 1 entry 3 (type 05, start 104832 relative to extended start); screenshots A1_13, A1_15"

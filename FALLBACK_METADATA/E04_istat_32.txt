@@ -1,0 +1,32 @@
+MFT Entry Header Values:
+Entry: 32        Sequence: 2
+$LogFile Sequence Number: 1087523
+Not Allocated File
+Links: 1
+
+$STANDARD_INFORMATION Attribute Values:
+Flags: Archive
+Owner ID: 0
+Security ID: 260  ()
+Created:	2004-02-29 20:01:37.360390400 (GMT Standard Time)
+File Modified:	2004-02-29 20:02:22.054657600 (GMT Standard Time)
+MFT Modified:	2004-02-29 20:02:22.054657600 (GMT Standard Time)
+Accessed:	2004-02-29 20:02:22.054657600 (GMT Standard Time)
+
+$FILE_NAME Attribute Values:
+Flags: Archive
+Name: mult1.dat
+Parent MFT Entry: 5 	Sequence: 5
+Allocated Size: 0   	Actual Size: 0
+Created:	2004-02-29 20:01:37.360390400 (GMT Standard Time)
+File Modified:	2004-02-29 20:01:37.360390400 (GMT Standard Time)
+MFT Modified:	2004-02-29 20:01:37.360390400 (GMT Standard Time)
+Accessed:	2004-02-29 20:01:37.360390400 (GMT Standard Time)
+
+Attributes: 
+Type: $STANDARD_INFORMATION (16-0)   Name: N/A   Resident   size: 72
+Type: $FILE_NAME (48-2)   Name: N/A   Resident   size: 84
+Type: $DATA (128-3)   Name: N/A   Non-Resident   size: 3801  init_size: 3801
+4079 4080 4081 4082 
+Type: $DATA (128-6)   Name: ADS   Non-Resident   size: 1234  init_size: 1234
+4083 4084 

@@ -1,0 +1,37 @@
+FILE SYSTEM INFORMATION
+--------------------------------------------
+File System Type: FAT16
+
+OEM Name: MSDOS5.0
+Volume ID: 0xc0fecd11
+Volume Label (Boot Sector): NO NAME    
+Volume Label (Root Directory): FAT_REC_1  
+File System Type Label: FAT16   
+
+Sectors before file system: 63
+
+File System Layout (in sectors)
+Total Range: 0 - 12032
+Total Range in Image: 0 - 12031
+* Reserved: 0 - 7
+** Boot Sector: 0
+* FAT 0: 8 - 31
+* FAT 1: 32 - 55
+* Data Area: 56 - 12032
+** Root Directory: 56 - 87
+** Cluster Area: 88 - 12031
+** Non-clustered: 12032 - 12032
+
+METADATA INFORMATION
+--------------------------------------------
+Range: 2 - 191622
+Root Directory: 2
+
+CONTENT INFORMATION
+--------------------------------------------
+Sector Size: 512
+Cluster Size: 1024
+Total Cluster Range: 2 - 5973
+
+FAT CONTENTS (in sectors)
+--------------------------------------------

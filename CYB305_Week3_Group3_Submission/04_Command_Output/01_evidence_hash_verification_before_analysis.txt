@@ -1,0 +1,9 @@
+CYB 305 Week 3 - Group 3
+Command (Verify_Evidence.ps1 was blocked by script policy, so the manual check was used):
+  Get-FileHash .\EVIDENCE\*.dd -Algorithm SHA256 | Format-List Path,Hash
+Run from: C:\Users\CYBER LAB\Downloads\Week 3-20261029T083412Z-1-001\Week 3
+
+6-fat-undel.dd       E6F1F3BC53D426AE6F81B2D7B75598BC95F7447853E38B8F9CA1D1B65F7B3512  (E03) matches manifest
+7-ntfs-undel.dd      4138CC42148E3381E3C66EB50090F4A30416AE8C20247C2B9BAD27CF8C764D88  (E04) matches manifest
+ext-part-test-2.dd   B075ED83211765DD14F24390389B77B20EF688D70AAF69385E026B5513BDD8D2  (E01) matches manifest
+fat-img-kw.dd        B173FD82A052E2637CFEB89CF21A603817F072799A63DECFFBFC948FC19A06E6  (E02) matches manifest

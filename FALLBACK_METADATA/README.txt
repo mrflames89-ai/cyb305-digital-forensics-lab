@@ -1,0 +1,1 @@
+These are captured TSK 4.15.0 outputs from 28 October 2026. Use if your GUI lacks a needed view; label them as supplied output. Sector coordinates in filesystem reports are volume-relative. The E01 mmls map is disk-relative. Host time labels in istat are not a verified original timezone. No Autopsy GUI screenshots are claimed.

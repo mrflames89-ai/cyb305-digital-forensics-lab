@@ -1,0 +1,9 @@
+EVIDENCE/
+CYB305/
+**/CYB305/
+**/_SPARE_not_for_submission/
+**/*.bak
+**/*.tmp
+**/~$*
+Thumbs.db
+.DS_Store

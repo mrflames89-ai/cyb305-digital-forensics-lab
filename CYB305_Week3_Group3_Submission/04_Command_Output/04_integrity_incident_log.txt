@@ -1,0 +1,28 @@
+E02 INTEGRITY INCIDENT (fat-img-kw.dd)
+
+1. Post-analysis check (same Get-FileHash command as before analysis):
+   E03 E6F1F3BC...F7B3512  match
+   E04 4138CC42...764D88   match
+   E01 B075ED83...BDD8D2   match
+   E02 D05B3F5557430DD051527413BD4A595169A5C7D21A18340ACF6BCA4ABD6B0643  DOES NOT MATCH
+       (manifest: B173FD82A052E2637CFEB89CF21A603817F072799A63DECFFBFC948FC19A06E6)
+   (screenshot: 03_Screenshots/00_Setup_and_Integrity/S03_post_analysis_hash_check_E02_MISMATCH.png)
+
+2. A QUARANTINE folder was created. Move-Item first failed (file in use by Autopsy/HxD); after closing both it succeeded.
+   QUARANTINE\fat-img-kw_MODIFIED.dd  Length 15718181  LastWrite 10/29/2026 12:13 PM
+   EVIDENCE then held: 6-fat-undel.dd, 7-ntfs-undel.dd, ext-part-test-2.dd (all 9:43 AM) and
+   fat-img-kw.dd.bak  Length 15728640  LastWrite 9:43 AM  (backup created by HxD when the file was saved)
+   Original size of fat-img-kw.dd = 15,728,640 bytes; the modified file is 10,459 bytes shorter.
+
+3. fat-img-kw.dd.bak was copied to EVIDENCE\fat-img-kw.dd and the .bak moved to QUARANTINE.
+   Hash of the modified file (kept for the record):
+   D05B3F5557430DD051527413BD4A595169A5C7D21A18340ACF6BCA4ABD6B0643
+
+4. Final check of EVIDENCE\*.dd:
+   6-fat-undel.dd       E6F1F3BC53D426AE6F81B2D7B75598BC95F7447853E38B8F9CA1D1B65F7B3512  match
+   7-ntfs-undel.dd      4138CC42148E3381E3C66EB50090F4A30416AE8C20247C2B9BAD27CF8C764D88  match
+   ext-part-test-2.dd   B075ED83211765DD14F24390389B77B20EF688D70AAF69385E026B5513BDD8D2  match
+   fat-img-kw.dd        B173FD82A052E2637CFEB89CF21A603817F072799A63DECFFBFC948FC19A06E6  match (restored)
+
+Probable cause (not proven): E02 was opened in HxD in Overwrite mode and saved. The length change means bytes were also removed, not only overwritten.
+Note: the .bak was copied into place before it was hashed on its own; the final hash of the restored fat-img-kw.dd proves it is identical to the reference.

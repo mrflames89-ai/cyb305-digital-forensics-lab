@@ -1,0 +1,65 @@
+id,file,use_status,caption
+S01,00_Setup_and_Integrity/S01_zip_and_extracted_folder.png,USE,"Downloads folder: the course ZIP (816 KB) and the extracted folder, before analysis."
+S02,00_Setup_and_Integrity/S02_E01_opened_in_HxD_file_length.png,SUPPORT,"E01 (ext-part-test-2.dd) open in HxD; status bar Length 159,989,760 bytes, matching the manifest size."
+S03,00_Setup_and_Integrity/S03_post_analysis_hash_check_E02_MISMATCH.png,USE,"Post-analysis SHA-256 check: E01, E03, E04 match the manifest; E02 (fat-img-kw.dd) shows D05B3F55... instead of B173FD82... (integrity incident, see report)."
+S10,A1_Partition_Table_E01/A1_01_goto_446_dialog.png,USE,"HxD Go to dialog: offset 446, decimal, relative to beginning (method evidence for MBR partition table)."
+S11,A1_Partition_Table_E01/A1_02_MBR_partition_table_offset446.png,USE,"E01 MBR: partition entries from offset 446 (types 04, 04, 04, 05), disk identifier F4 FE 8F 8A at 440-443, 55 AA at 510-511. Offsets decimal, disk-relative."
+S12,A1_Partition_Table_E01/A1_03_disk_identifier_offset440.png,SUPPORT,Same MBR view with the cursor at offset 440 (disk identifier F4 FE 8F 8A).
+S13,A1_Partition_Table_E01/A1_04_boot_signature_55AA.png,SUPPORT,Row at offset 496 ending in 55 AA at offsets 510-511.
+S14,A1_Partition_Table_E01/A1_05_goto_440_dialog.png,SUPPORT,"Go to dialog: offset 440, dec, begin."
+S15,A1_Partition_Table_E01/A1_06_goto_510_dialog.png,SUPPORT,"Go to dialog: offset 510, dec, begin."
+S16,A1_Partition_Table_E01/A1_07_goto_32256_dialog.png,SUPPORT,"Go to dialog: offset 32256 (LBA 63 x 512), dec, begin."
+S17,A1_Partition_Table_E01/A1_08_volume1_boot_sector_offset32256.png,USE,"E01 volume 1 boot sector at disk offset 32,256 (decimal): OEM name MSDOS5.0, 512 bytes per sector, FAT16."
+S18,A1_Partition_Table_E01/A1_09_goto_32267_dialog.png,SUPPORT,"Go to dialog: offset 32267 (32,256 + 11), dec, begin."
+S19,A1_Partition_Table_E01/A1_10_bytes_per_sector_offset32267.png,USE,Status bar Offset(d): 32267; Data Inspector UInt16 = 512: bytes per sector of volume 1.
+S20,A1_Partition_Table_E01/A1_11_EBR1_partition_table.png,USE,"EBR 1 (LBA 157248, byte 80,510,976): table at 80,511,422 shows two FAT16 entries (type 04, start 63 and 52,479) and a link entry (type 05, start 104,832); 55 AA at end of sector."
+S21,A1_Partition_Table_E01/A1_12_EBR1_partition_table_hex_offsets.png,SUPPORT,"Same EBR 1 table, offset column in hex and partly cut off."
+S22,A1_Partition_Table_E01/A1_13_EBR2_partition_table.png,USE,"EBR 2 (LBA 262080, byte 134,184,960): one FAT16 entry (type 06, start 63, length 0xC4A1 = 50,337 sectors), no link entry, 55 AA."
+S23,A1_Partition_Table_E01/A1_14_volume4_boot_sector_80543232.png,USE,"Volume 4 boot sector at disk offset 80,543,232 (EBR 1 LBA 157,248 + 63): MSDOS5.0, 512 bytes per sector, 1 sector per cluster, FAT16."
+S24,A1_Partition_Table_E01/A1_15_volume6_boot_sector_134217216.png,USE,"Volume 6 boot sector at disk offset 134,217,216 (EBR 2 LBA 262,080 + 63): OEM mkdosfs, 512 bytes per sector, 4 sectors per cluster, FAT16."
+S25,A1_Partition_Table_E01/A1_16_goto_32267_dialog_alt.png,SUPPORT,Go to dialog: 32267 (duplicate method evidence).
+S30,A2_Allocation_and_Slack_E02/A2_01_E02_boot_sector.png,USE,"E02 boot sector (offsets shown in HEX): 512 bytes per sector (00 02 at 11), 1 sector per cluster, reserved 1, 2 FATs, 512 root entries, 119 sectors per FAT."
+S31,A2_Allocation_and_Slack_E02/A2_02_E02_root_directory_offset122368.png,USE,"E02 root directory (decimal offsets from 122,368): FILE1-FILE7 and SECOND with start clusters and sizes; FILE2 cluster 3 size 400; FILE4 cluster 6 size 631; FILE5 deleted (E5)."
+S32,A2_Allocation_and_Slack_E02/A2_03_E02_FAT_cluster6_offset524.png,USE,"E02 FAT at offset 524 (512 + 6 x 2): cluster 6 points to cluster 8 (Data Inspector value 8), so file4.dat is fragmented."
+S33,A2_Allocation_and_Slack_E02/A2_04_Autopsy_E02_tree.png,SUPPORT,Autopsy tree for fat-img-kw.dd: 8 octet-stream files and 1 deleted file.
+S34,A2_Allocation_and_Slack_E02/A2_05_Autopsy_E02_file_listing_sizes.png,USE,"Autopsy E02 listing: file2.dat 400 bytes, file4.dat 631 bytes, deleted _ILE5.DAT, $FAT1/$FAT2 60,928 bytes; times in PDT."
+S35,A2_Allocation_and_Slack_E02/A2_06_Autopsy_E02_listing_13_results.png,SUPPORT,Autopsy E02 listing (13 results) used before extracting file2.dat and file4.dat.
+S40,A3_Search_Boundaries_E02/A3_01_raw_view_139248.png,SUPPORT,"E02 raw view around sector 272 (cluster 3); 1sla ends the row at 139,648; ck1 starts the row at 139,664."
+S41,A3_Search_Boundaries_E02/A3_02_raw_view_139664.png,SUPPORT,"E02 raw view from 139,664: ck1 then leftover (non-zero) slack bytes to the end of the sector."
+S42,A3_Search_Boundaries_E02/A3_03_raw_view_2slack2_140796.png,SUPPORT,"E02 raw view to 140,800: 2sla (end of file3.dat's slack) continues as ck2 at the start of file4.dat's first sector."
+S43,A3_Search_Boundaries_E02/A3_04_raw_hit_1slack1_139660.png,USE,"Raw hit: 1slack1 at offset 139,660, length 7. 1sla = last 4 bytes of file2.dat (400 bytes); ck1 begins at 139,664 in slack."
+S44,A3_Search_Boundaries_E02/A3_05_raw_hit_3slack3_142209.png,USE,"Raw hit: 3slack3 at offset 142,209, length 7 (sector 277 offset 385, beyond file4.dat's 119 bytes in that sector)."
+S45,A3_Search_Boundaries_E02/A3_06_1frag_and_ment1_141307_141824.png,USE,"Raw view: 1frag ends the row at 141,307-141,311 (sector 275); ment1 at 141,824 (sector 277); sector 276 (deleted FILE5 data, contains the word 'deleted') lies between."
+S46,A3_Search_Boundaries_E02/A3_07_raw_search_1fragment1_not_found.png,USE,HxD raw search on E02: Can't find '1fragment1'.
+S47,A3_Search_Boundaries_E02/A3_08_export_search_1fragment1_not_found.png,SUPPORT,HxD message: Can't find '1fragment1' (file tab not visible; by the order of searches this is file2.dat - confirm).
+S48,A3_Search_Boundaries_E02/A3_09_file2_export_1slack1_not_found.png,USE,file2.dat export (400 bytes): Can't find '1slack1' (only '1sla' is inside the file).
+S49,A3_Search_Boundaries_E02/A3_10_file2_export_3slack3_not_found.png,USE,file2.dat export: Can't find '3slack3'.
+S50,A3_Search_Boundaries_E02/A3_11_file4_export_1fragment1_FOUND_0x1FB.png,USE,"file4.dat export (631 bytes): 1fragment1 found at offset 0x1FB = 507, length 10 (hex offsets)."
+S51,A3_Search_Boundaries_E02/A3_12_file4_export_3slack3_not_found.png,USE,file4.dat export: Can't find '3slack3' (it is in slack beyond byte 631).
+S52,A3_Search_Boundaries_E02/A3_13_file4_export_1slack1_not_found.png,USE,file4.dat export: Can't find '1slack1'.
+S60,A4_Deleted_File_Recovery_E03_E04/A4_01_Autopsy_E03_deleted_files.png,USE,"Autopsy E03 (6-fat-undel.dd): deleted entries _ing.dat, _rag1.dat, _rag2.dat, _ult1.dat (first character lost); times in PST."
+S61,A4_Deleted_File_Recovery_E03_E04/A4_02_E03_listing_names.png,SUPPORT,"E03 listing, names only."
+S62,A4_Deleted_File_Recovery_E03_E04/A4_03_Autopsy_E04_deleted_files.png,USE,"Autopsy E04 (7-ntfs-undel.dd): deleted frag1.dat, frag2.dat, mult1.dat, mult1.dat:ADS, res1.dat, sing1.dat (full names kept)."
+S63,A4_Deleted_File_Recovery_E03_E04/A4_04_E04_listing_names.png,SUPPORT,"E04 listing, names only, including $-metadata files."
+S70,A5_Resident_Data_E04/A5_01_res1_File_Metadata_top.png,USE,"Autopsy File Metadata for res1.dat: size 101, unallocated, MD5 9036637712b491904cd0bfbdbe648453, MFT entry 37 sequence 3 (times in WAT)."
+S71,A5_Resident_Data_E04/A5_02_res1_istat_DATA_resident_101.png,USE,Autopsy/istat attributes for res1.dat: $DATA (128-1) Resident size 101 (the $FILE_NAME 'Actual Size: 0' is not the data size).
+S72,A5_Resident_Data_E04/A5_03_MFT_record37_in_HxD.png,SUPPORT,"HxD E04 around MFT record 37 (FILE0 signature at 4,370,432); cursor at 4,370,720."
+S73,A5_Resident_Data_E04/A5_04_101_resident_bytes_selected.png,USE,"HxD: Offset(d) 4370720, Block 4370720-4370820, Length 101 = the resident $DATA content inside MFT record 37; FF FF FF FF end marker follows."
+X01,_SPARE_not_for_submission/X01_data_inspector_crop.png,SPARE,"Cropped Data Inspector, no offset visible."
+X02,_SPARE_not_for_submission/X02_data_inspector_crop.png,SPARE,"Cropped Data Inspector, no offset visible."
+X03,_SPARE_not_for_submission/X03_volume1_boot_sector_duplicate.png,SPARE,"Earlier, less complete view of the volume 1 boot sector (A1_08 is better)."
+X04,_SPARE_not_for_submission/X04_32267_no_status_bar.png,SPARE,32267 view without status bar visible (A1_10 is better).
+X05,_SPARE_not_for_submission/X05_32267_cropped.png,SPARE,"Cropped, columns 00-02 hidden."
+X06,_SPARE_not_for_submission/X06_32267_scrolled_sideways.png,SPARE,"Scrolled sideways, columns hidden (A1_10 is better)."
+X07,_SPARE_not_for_submission/X07_EBR_attempt_table_at_bottom_edge.png,SPARE,"EBR attempt: table at the bottom edge, columns hidden. Superseded by A1_11."
+X08,_SPARE_not_for_submission/X08_EBR2_attempt_table_at_bottom_edge.png,SPARE,EBR 2 attempt: superseded by A1_13.
+X09,_SPARE_not_for_submission/X09_MISMATCH_status_134185422_shows_MBR.png,SPARE,DO NOT SUBMIT: status bar says 134185422 but the rows shown are the MBR at the start of the disk.
+X10,_SPARE_not_for_submission/X10_MISMATCH_status_80511422_shows_MBR.png,SPARE,DO NOT SUBMIT: status bar says 80511422 but the rows shown are the MBR at the start of the disk.
+X11,_SPARE_not_for_submission/X11_scroll_view_status_142209.png,SPARE,"Scrolled view near 142,112; status bar still 142209 (cursor not moved)."
+X12,_SPARE_not_for_submission/X12_scroll_view_2fragment.png,SPARE,"Scrolled view near 142,672 ('2fragment'); status bar mismatch."
+X13,_SPARE_not_for_submission/X13_scroll_view.png,SPARE,"Scrolled view near 143,152; status bar mismatch."
+X14,_SPARE_not_for_submission/X14_scroll_view.png,SPARE,"Scrolled view near 143,872; status bar mismatch."
+X15,_SPARE_not_for_submission/X15_scroll_view.png,SPARE,"Scrolled view near 144,048; status bar mismatch."
+X16,_SPARE_not_for_submission/X16_scroll_view.png,SPARE,"Scrolled view near 144,624; status bar mismatch."
+X17,_SPARE_not_for_submission/X17_scroll_view_3cross3.png,SPARE,"Scrolled view near 145,008 ('3cross3'); status bar mismatch."
+X18,_SPARE_not_for_submission/X18_goto446_dialog_dup.png,SPARE,Duplicate Go to 446 dialog.

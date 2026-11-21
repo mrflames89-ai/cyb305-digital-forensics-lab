@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101d2b">
+  <meta name="description" content="A portfolio case study in digital forensics: disk partitions, file-system structures, evidence integrity, and fragmented file recovery.">
+  <title>Hard Disks &amp; File Systems — Digital Forensics Portfolio</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="Digital Forensics Portfolio home">
+      <span class="brand-mark" aria-hidden="true">DF</span>
+      <span><strong>Digital Forensics</strong><small>Evidence analysis portfolio</small></span>
+    </a>
+    <nav aria-label="Main navigation">
+      <a href="#overview">Overview</a><a href="#activities">Lab activities</a><a href="#case-study">Case study</a><a href="#takeaways">Takeaways</a>
+    </nav>
+    <a class="header-cta" href="#method">The method <span aria-hidden="true">↘</span></a>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="top">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="eyebrow-dot"></span> A digital forensics case study</p>
+        <h1>Read the disk.<br><em>Question the story.</em></h1>
+        <p class="hero-lede">A clear, evidence-led tour through partitions, file allocation, slack space, deleted data, and one deceptively simple recovery claim.</p>
+        <div class="hero-actions"><a class="button button-light" href="#overview">Explore the lab <span aria-hidden="true">↓</span></a><span class="hero-note">CYB 305 <i>/</i> Hard Disks &amp; File Systems</span></div>
+      </div>
+      <div class="hero-art" aria-label="Illustration of disk partitions and file systems">
+        <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+        <div class="disk"><div class="disk-ring ring-one"></div><div class="disk-ring ring-two"></div><div class="disk-hole"></div><span class="disk-label label-mbr">MBR</span><span class="disk-label label-fat">FAT16</span><span class="disk-label label-ntfs">NTFS</span><span class="disk-label label-ebr">EBR</span></div>
+        <span class="art-caption">A disk is a map of structures,<br>not just a container of files.</span><span class="art-index">FIELD NOTES <i>—</i> THE EVIDENCE</span>
+      </div>
+      <div class="hero-footer"><span>CONTROLLED TEST IMAGES</span><span>01 — 05 <i>LAB ACTIVITIES</i></span><span>OBSERVE <b>→</b> REASON <b>→</b> VERIFY</span></div>
+    </section>
+
+    <section class="intro section-wrap" id="overview">
+      <div class="section-kicker"><span>01</span> THE BIG PICTURE</div>
+      <div class="intro-grid"><div><h2>Forensics is more than finding a file.</h2><p class="intro-lede">This lab asks you to inspect how a disk is organized, follow how file systems store data, and decide whether the evidence really supports a recovery claim.</p></div>
+        <div class="intro-aside"><p>The evidence is a set of published Digital Forensics Tool Testing (DFTT) images—small, controlled teaching fixtures, not data from a real investigation.</p><a class="text-link" href="#method">Start with the evidence standard <span aria-hidden="true">↗</span></a></div>
+      </div>
+      <div class="metric-row" aria-label="Lab at a glance"><div class="metric"><strong>04</strong><span>disk images<br>to examine</span></div><div class="metric"><strong>05</strong><span>hands-on<br>activities</span></div><div class="metric"><strong>02</strong><span>file systems<br>FAT16 + NTFS</span></div><div class="metric metric-quote"><span>THE CORE QUESTION</span><strong>Does the evidence support the conclusion?</strong></div></div>
+    </section>
+
+    <section class="evidence-section">
+      <div class="section-wrap evidence-grid">
+        <div><div class="section-kicker section-kicker-light"><span>02</span> THE EVIDENCE</div><h2>Four images.<br>Different questions.</h2><p class="muted-copy">Each image has a job in the investigation. The ID is used throughout the worksheets and report.</p></div>
+        <div class="evidence-list">
+          <article class="evidence-item"><span class="evidence-id">E01</span><div><h3>Partition addressing</h3><p><code>ext-part-test-2.dd</code> · MBR, extended partition, and logical volumes.</p></div><span class="evidence-type">FAT16</span></article>
+          <article class="evidence-item"><span class="evidence-id">E02</span><div><h3>Allocation &amp; search boundaries</h3><p><code>fat-img-kw.dd</code> · FAT16 chains, file slack, and raw-versus-logical searches.</p></div><span class="evidence-type">FAT16</span></article>
+          <article class="evidence-item"><span class="evidence-id">E03</span><div><h3>Deleted FAT recovery</h3><p><code>6-fat-undel.dd</code> · A deleted entry whose allocation chain has been cleared.</p></div><span class="evidence-type">FAT16</span></article>
+          <article class="evidence-item"><span class="evidence-id">E04</span><div><h3>NTFS recovery &amp; resident data</h3><p><code>7-ntfs-undel.dd</code> · NTFS run lists, alternate streams, and resident file content.</p></div><span class="evidence-type">NTFS</span></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="activities section-wrap" id="activities">
+      <div class="section-kicker"><span>03</span> THE INVESTIGATION</div>
+      <div class="section-heading"><h2>Five activities.<br><em>One evidence trail.</em></h2><p>Move from the disk’s outer structure to individual file bytes. At every step, separate what you observed from what you infer.</p></div>
+      <div class="activity-list">
+        <article class="activity-card"><div class="activity-number">01</div><div class="activity-content"><div class="activity-meta"><span>E01</span><span>PARTITION TABLES</span></div><h3>Find where volumes begin</h3><p>Read the MBR entries, then follow the extended boot record (EBR) chain. Convert sector addresses to byte offsets and keep track of which structure each relative address is based on.</p><div class="formula">byte offset = LBA × bytes per sector <span>For this image: 63 × 512 = 32,256 bytes</span></div></div>
+          <div class="activity-visual partition-visual" aria-label="Three primary partitions and an extended partition containing logical volumes"><span class="partition-block block-mbr">MBR</span><span class="partition-block block-primary">PRIMARY</span><span class="partition-block block-primary">PRIMARY</span><span class="partition-block block-primary">PRIMARY</span><span class="partition-block block-extended">EXTENDED <i>EBR → EBR</i></span><small>DISK ADDRESS SPACE →</small></div>
+        </article>
+        <article class="activity-card"><div class="activity-number">02</div><div class="activity-content"><div class="activity-meta"><span>E02</span><span>FAT16 ALLOCATION</span></div><h3>Follow the chain. Measure the slack.</h3><p>Compare a file’s logical size with the space reserved by its cluster chain. A FAT entry can point to a non-adjacent cluster; the final cluster may also contain bytes beyond end-of-file.</p><div class="mini-stats"><span><b>file2.dat</b> 400 B file <i>·</i> 112 B slack</span><span><b>file4.dat</b> 631 B file <i>·</i> 393 B slack</span></div></div>
+          <div class="activity-visual cluster-visual" aria-label="File data occupies clusters, with a shaded section showing unused slack"><div class="cluster-label">FILE DATA</div><div class="cluster-strip"><span>CLUSTER 6</span><span>CLUSTER 8</span></div><div class="cluster-label slack-label">SLACK</div><div class="slack-strip"><span>USED BY FILE</span><span>BYTES AFTER EOF</span></div><small>FAT CHAIN: 6 → 8 <i>·</i> 512 BYTES / CLUSTER</small></div>
+        </article>
+        <article class="activity-card"><div class="activity-number">03</div><div class="activity-content"><div class="activity-meta"><span>E02</span><span>RAW SEARCH VS FILE SEARCH</span></div><h3>Ask what your search can actually see</h3><p>A raw image search scans bytes regardless of file boundaries. A file search follows the file system’s allocation map and stops at the file’s logical end. The same text can appear in slack in one view—and not in the file itself.</p><div class="search-example"><span class="search-tag">RAW IMAGE</span><span class="search-hit">1sla</span><span class="search-muted">ck1</span><span class="search-divider">≠</span><span class="search-tag">FILE EXPORT</span><span class="search-none">not found</span></div></div>
+          <div class="activity-visual search-visual"><div class="search-row"><span>RAW BYTES</span><div class="byte-line"><i></i><i></i><i></i><i class="byte-hit"></i><i class="byte-hit"></i><i class="byte-hit"></i><i class="byte-hit"></i><i class="byte-muted"></i><i class="byte-muted"></i><i></i><i></i></div></div><div class="search-row"><span>FILE CONTENT</span><div class="byte-line"><i></i><i></i><i></i><i class="byte-hit"></i><i class="byte-hit"></i><i class="byte-hit"></i><i class="byte-hit"></i></div></div><small>THE FILE ENDS HERE <b>↑</b> SLACK DOES NOT</small></div>
+        </article>
+        <article class="activity-card"><div class="activity-number">04</div><div class="activity-content"><div class="activity-meta"><span>E03 + E04</span><span>DELETED FILE RECOVERY</span></div><h3>Same length doesn’t mean same file</h3><p>Compare the deleted FAT16 file with the NTFS recovery. FAT’s cleared chain leaves a gap in the evidence; NTFS retains a run list that records the non-adjacent extents.</p><a class="text-link" href="#case-study">See the recovery claim, tested <span aria-hidden="true">↗</span></a></div>
+          <div class="activity-visual runlist-visual"><span class="run-label">NTFS RUN LIST</span><div class="run-bar"><span>1,024 B</span><i></i><span>560 B</span></div><div class="run-addresses"><span>CLUSTER 4073</span><span>4074<br><small>other data</small></span><span>CLUSTER 4075</span></div><small>THE RUN LIST RECORDS BOTH EXTENTS</small></div>
+        </article>
+        <article class="activity-card"><div class="activity-number">05</div><div class="activity-content"><div class="activity-meta"><span>E04</span><span>NTFS RESIDENT DATA</span></div><h3>Sometimes the file is inside its record</h3><p>Small NTFS files can be stored directly in their Master File Table (MFT) record. <code>res1.dat</code> is 101 bytes of resident data—there is no data cluster, so cluster slack does not apply.</p><div class="resident-note"><span class="tiny-check">✓</span> Also distinguish an unnamed data stream from a named alternate data stream (ADS).</div></div>
+          <div class="activity-visual mft-visual" aria-label="A Master File Table record containing metadata and resident file data"><div class="mft-record"><span class="mft-title">MFT RECORD 37 <i>1,024 bytes</i></span><div class="mft-attr"><span>$STANDARD_INFORMATION</span><i></i></div><div class="mft-attr"><span>$FILE_NAME</span><i></i></div><div class="mft-attr mft-data"><span>$DATA · RESIDENT</span><b>101 BYTES OF FILE CONTENT</b></div></div><small>CONTENT LIVES INSIDE THE MFT RECORD</small></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="case-section" id="case-study">
+      <div class="section-wrap"><div class="section-kicker section-kicker-light"><span>04</span> GROUP 3 · FRAGMENTED RECOVERY</div>
+        <div class="case-heading"><h2>One claim.<br><em>Two very different answers.</em></h2><blockquote>“The recovered 1,584-byte <code>frag1.dat</code> has the right length, so the recovery is complete.”</blockquote></div>
+        <div class="verdict-grid">
+          <article class="verdict-card verdict-wrong"><div class="verdict-top"><span>E03 · FAT16</span><span class="verdict-icon" aria-hidden="true">×</span></div><h3>Length matches.<br>Content doesn’t.</h3><div class="verdict-measure"><strong>1,584</strong><span>bytes recovered</span></div><p>The deleted entry records a start cluster and size, but the FAT chain is cleared. Assuming consecutive clusters pulls the first 560 bytes of another deleted file into the result.</p><div class="hash-line"><span>RECOVERY MD5</span><code>c4f3b9a0…</code></div><div class="hash-line"><span>REFERENCE MD5</span><code>7a3bc5b7…</code></div><div class="verdict-result">✕ &nbsp; Hash mismatch · not supported</div></article>
+          <div class="verdict-bridge" aria-hidden="true"><span>VS</span></div>
+          <article class="verdict-card verdict-right"><div class="verdict-top"><span>E04 · NTFS</span><span class="verdict-icon" aria-hidden="true">✓</span></div><h3>Length matches.<br>Run list confirms it.</h3><div class="verdict-measure"><strong>1,584</strong><span>bytes recovered</span></div><p>The MFT run list identifies two extents: 1,024 bytes from cluster 4073, then 560 bytes from cluster 4075. No consecutive-cluster guess is needed.</p><div class="hash-line"><span>RECOVERY MD5</span><code>7a3bc5b7…</code></div><div class="hash-line"><span>REFERENCE MD5</span><code>7a3bc5b7…</code></div><div class="verdict-result">✓ &nbsp; Hash match · supported for this test</div></article>
+        </div>
+        <div class="lesson-banner"><span class="lesson-mark">!</span><p><strong>A filename and byte count describe a result. They don’t prove its contents.</strong><br>Use surviving metadata to explain how the bytes were assembled, then compare the content hash against a trusted reference.</p></div>
+        <p class="case-caveat">The matching reference hash supports the recovery for this controlled test fixture. It does not establish who created, deleted, or owned the file.</p>
+      </div>
+    </section>
+
+    <section class="method section-wrap" id="method">
+      <div class="section-kicker"><span>05</span> HOW TO REASON FROM EVIDENCE</div>
+      <div class="section-heading method-heading"><h2>Make every conclusion<br><em>show its work.</em></h2><p>A screenshot is a record of a view—not an explanation. Build a chain that another analyst can check.</p></div>
+      <div class="method-steps"><article><span>01</span><h3>Observe</h3><p>Record the exact value, image, offset, tool, and context.</p></article><article><span>02</span><h3>Interpret</h3><p>Explain what the observation means—and what assumption you used.</p></article><article><span>03</span><h3>Corroborate</h3><p>Compare independent views: raw bytes, file-system metadata, exports, or hashes.</p></article><article><span>04</span><h3>Qualify</h3><p>State what the evidence cannot establish and what should be checked next.</p></article></div>
+      <div class="integrity-note"><div class="integrity-icon" aria-hidden="true">SHA<br>256</div><div><span class="integrity-label">EVIDENCE INTEGRITY · A TRANSPARENT NOTE</span><h3>Verify first. If something changes, document it.</h3><p>All four source images initially matched the published SHA-256 manifest. During analysis, the E02 working copy changed after an HxD save and was quarantined; it was restored from its backup and the restored image matched the manifest. The other three images remained unchanged. This is why the lab emphasizes read-only evidence and repeatable hash checks.</p></div></div>
+    </section>
+
+    <section class="takeaways-section" id="takeaways"><div class="section-wrap takeaways-grid"><div><div class="section-kicker section-kicker-light"><span>06</span> WHAT TO TAKE AWAY</div><h2>Slow down at the point where data becomes a story.</h2><p class="muted-copy">The strongest result is not the most confident one. It is the one whose evidence, reasoning, and limitations are all visible.</p></div>
+      <div class="takeaway-list"><details open><summary>Addresses need a base <span>+</span></summary><p>Logical partition entries and EBR links use different reference points. Show the base before adding a relative sector count.</p></details><details><summary>Slack is outside the logical file <span>+</span></summary><p>Clusters are allocated in units; a file may end before its last cluster does. Raw bytes after EOF are not part of the file’s logical content.</p></details><details><summary>Recovery depends on surviving metadata <span>+</span></summary><p>A cleared FAT chain may leave only a start cluster and size. An NTFS run list can preserve extent locations, but neither result should be overstated.</p></details><details><summary>A hash checks bytes—not authorship <span>+</span></summary><p>A reference hash can validate content for this test. By itself it cannot identify who made, changed, or deleted a file.</p></details></div>
+    </div></section>
+
+    <section class="glossary section-wrap"><div class="section-kicker"><span>07</span> QUICK GLOSSARY</div><div class="glossary-grid"><article><h3>LBA</h3><p>Logical Block Address: a numbered sector on a disk or volume.</p></article><article><h3>Cluster</h3><p>The file system’s unit of allocation; one or more sectors.</p></article><article><h3>Slack</h3><p>Allocated bytes after the logical end of a file in its final cluster.</p></article><article><h3>Run list</h3><p>NTFS metadata describing where a non-resident file’s extents are stored.</p></article><article><h3>Resident data</h3><p>Small file content stored inside the file’s MFT record.</p></article><article><h3>MD5 / SHA-256</h3><p>Hash functions used here to compare file content or verify evidence images.</p></article></div></section>
+
+    <section class="final-note"><div class="section-wrap final-note-inner"><span class="final-star" aria-hidden="true">✳</span><p>This site is a learning companion to the CYB 305 digital forensics lab.<br><strong>Use the manual and evidence report for the full procedure and recorded observations.</strong></p><a href="#top" class="back-top">BACK TO TOP ↑</a></div><div class="section-wrap footer-line"><span>CYB 305 · DIGITAL FORENSICS</span><span>CONTROLLED TEST IMAGES · NOT A REAL CASE</span></div></section>
+  </main>
+</body>
+</html>

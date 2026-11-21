@@ -1,0 +1,43 @@
+FILE SYSTEM INFORMATION
+--------------------------------------------
+File System Type: FAT16
+
+OEM Name: mkdosfsVolume ID: 0x3f441e25
+Volume Label (Boot Sector):            
+Volume Label (Root Directory):
+File System Type Label: FAT16   
+
+Sectors before file system: 0
+
+File System Layout (in sectors)
+Total Range: 0 - 30719
+* Reserved: 0 - 0
+** Boot Sector: 0
+* FAT 0: 1 - 119
+* FAT 1: 120 - 238
+* Data Area: 239 - 30719
+** Root Directory: 239 - 270
+** Cluster Area: 271 - 30719
+
+METADATA INFORMATION
+--------------------------------------------
+Range: 2 - 487702
+Root Directory: 2
+
+CONTENT INFORMATION
+--------------------------------------------
+Sector Size: 512
+Cluster Size: 512
+Total Cluster Range: 2 - 30450
+
+FAT CONTENTS (in sectors)
+--------------------------------------------
+271-271 (1) -> EOF
+272-272 (1) -> EOF
+273-274 (2) -> EOF
+275-275 (1) -> 277
+277-277 (1) -> EOF
+278-278 (1) -> 280
+279-279 (1) -> EOF
+280-280 (1) -> EOF
+281-281 (1) -> EOF
